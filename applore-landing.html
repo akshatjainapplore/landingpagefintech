@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -509,7 +510,7 @@
   overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
-  document.getElementById('modal-submit-btn').addEventListener('click', () => {
+  document.getElementById('modal-submit-btn').addEventListener('click', async () => {
     let valid = true;
     const checks = [
       { id: 'field-fname', val: document.getElementById('m-fname').value.trim() },
@@ -525,8 +526,36 @@
       if (bad) valid = false;
     });
     if (!valid) return;
-    formState.style.display = 'none';
-    successState.style.display = 'block';
+
+    const btn = document.getElementById('modal-submit-btn');
+    btn.textContent = 'Sending...';
+    btn.style.opacity = '0.6';
+    btn.disabled = true;
+
+    try {
+      const res = await fetch('https://formspree.io/f/mykbqbyo', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          firstName: document.getElementById('m-fname').value.trim(),
+          lastName:  document.getElementById('m-lname').value.trim(),
+          email:     document.getElementById('m-email').value.trim(),
+          company:   document.getElementById('m-company').value.trim(),
+          role:      document.getElementById('m-role').value,
+          source:    'Applore Fintech Landing Page'
+        })
+      });
+      if (res.ok) {
+        formState.style.display = 'none';
+        successState.style.display = 'block';
+      } else {
+        throw new Error('failed');
+      }
+    } catch (e) {
+      btn.textContent = 'Something went wrong — try again';
+      btn.style.opacity = '1';
+      btn.disabled = false;
+    }
   });
 
   document.getElementById('modal-success-close').addEventListener('click', closeModal);
