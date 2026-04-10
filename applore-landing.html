@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Applore — Advisory-Led Consulting for Fintech Leaders</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=DM+Sans:wght@300;400;500&family=Montserrat:ital,wght@1,700;1,800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; }
+  :root {
+    --black: #080810;
+    --white: #F4F4F8;
+    --blue: #4A9EFF;
+    --purple: #8B5CF6;
+    --grad: linear-gradient(135deg, #4A9EFF 0%, #8B5CF6 100%);
+    --grad-text: linear-gradient(135deg, #5EAEFF 0%, #A78BFA 100%);
+    --border: rgba(255,255,255,0.07);
+    --gray: #7A7A8C;
+    --surface: rgba(255,255,255,0.03);
+    --sans: 'DM Sans', sans-serif;
+    --display: 'Syne', sans-serif;
+  }
+  html { scroll-behavior: smooth; overflow-x: hidden; }
+  h1,h2,h3,h4,p,span,a,li { overflow: visible; }
+  body { background: var(--black); color: var(--white); font-family: var(--sans); font-weight: 300; line-height: 1.6; overflow-x: hidden; }
+  .grad-text { background: var(--grad-text); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; display: inline; line-height: 1.3; }
+
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 5rem; min-width: 0; background: rgba(8,8,16,0.9); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
+  .nav-logo { display: flex; align-items: center; gap: 0.7rem; text-decoration: none; }
+  .nav-logo-text { font-family: var(--display); font-size: 1.1rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; background: var(--grad-text); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .nav-right { display: flex; align-items: center; gap: 2rem; }
+  .nav-link { font-size: 0.82rem; letter-spacing: 0.04em; color: rgba(255,255,255,0.4); text-decoration: none; transition: color 0.2s; }
+  .nav-link:hover { color: var(--white); }
+  .nav-cta { padding: 0.6rem 1.4rem; font-family: var(--sans); font-size: 0.82rem; font-weight: 500; letter-spacing: 0.05em; color: var(--white); text-decoration: none; border: 1px solid rgba(74,158,255,0.4); background: rgba(74,158,255,0.08); transition: background 0.2s, border-color 0.2s; }
+  .nav-cta:hover { background: rgba(74,158,255,0.18); border-color: rgba(74,158,255,0.7); }
+
+  .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 0 5rem; position: relative; }
+  .hero-glow-1 { position: absolute; top: 0; right: 0; width: 600px; height: 600px; background: radial-gradient(circle, rgba(74,158,255,0.12) 0%, transparent 65%); pointer-events: none; }
+  .hero-glow-2 { position: absolute; bottom: 0; left: 0; width: 500px; height: 500px; background: radial-gradient(circle, rgba(139,92,246,0.09) 0%, transparent 65%); pointer-events: none; }
+  .hero-content { padding: 8rem 0 5rem; position: relative; z-index: 1; }
+  .hero-tag { display: inline-flex; align-items: center; gap: 0.75rem; font-size: 0.7rem; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.4); width: fit-content; margin-bottom: 2rem; opacity: 0; animation: fadeUp 0.7s 0.15s forwards; }
+  .hero-tag::before { content: ''; display: block; width: 32px; height: 1px; background: var(--grad); flex-shrink: 0; }
+  .hero h1 { font-family: var(--display); font-size: clamp(2.6rem, 5.5vw, 5rem); font-weight: 600; line-height: 1.2; letter-spacing: -0.01em; max-width: 860px; margin-bottom: 2rem; opacity: 0; animation: fadeUp 0.7s 0.3s forwards; }
+  .hero-sub { font-size: 1rem; color: rgba(244,244,248,0.55); max-width: 500px; line-height: 1.8; margin-bottom: 3rem; opacity: 0; animation: fadeUp 0.7s 0.45s forwards; }
+  .hero-actions { display: flex; gap: 1rem; align-items: center; opacity: 0; animation: fadeUp 0.7s 0.6s forwards; }
+  .btn-primary { display: inline-block; background: var(--grad); color: #fff; border: none; padding: 0.9rem 2.25rem; font-family: var(--sans); font-size: 0.88rem; font-weight: 500; letter-spacing: 0.04em; cursor: pointer; text-decoration: none; transition: opacity 0.2s, transform 0.2s; }
+  .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+  .btn-ghost { color: rgba(244,244,248,0.4); font-size: 0.85rem; text-decoration: none; transition: color 0.2s; }
+  .btn-ghost:hover { color: var(--white); }
+
+  .trust-bar { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 1.4rem 5rem; display: flex; align-items: center; gap: 3rem; }
+  .trust-label { font-size: 0.68rem; letter-spacing: 0.11em; text-transform: uppercase; color: rgba(255,255,255,0.2); white-space: nowrap; }
+  .trust-clients { display: flex; gap: 2.5rem; flex-wrap: wrap; font-family: var(--display); font-size: 0.8rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.28); }
+
+  .section { padding: 7rem 5rem; }
+  .section-tag { display: inline-flex; align-items: center; gap: 0.6rem; font-size: 0.7rem; letter-spacing: 0.13em; text-transform: uppercase; color: #7AB8FF; margin-bottom: 1.5rem; }
+  .section-tag::before { content: ''; display: block; width: 24px; height: 1px; background: var(--grad); }
+  .section h2 { font-family: var(--display); font-size: clamp(1.9rem, 3.5vw, 3rem); font-weight: 600; line-height: 1.25; letter-spacing: -0.01em; max-width: 640px; margin-bottom: 1rem; }
+  .section-lead { font-size: 0.95rem; color: var(--gray); max-width: 480px; line-height: 1.75; margin-bottom: 4rem; }
+
+  .problem-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); margin-top: 3.5rem; }
+  .problem-item { background: var(--black); padding: 2.5rem; position: relative; overflow: visible; transition: background 0.3s; }
+  .problem-item:hover { background: rgba(255,255,255,0.025); }
+  .problem-item::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px; background: var(--grad); opacity: 0; transition: opacity 0.3s; }
+  .problem-item:hover::after { opacity: 1; }
+  .problem-num { font-family: var(--display); font-size: 3rem; font-weight: 600; background: var(--grad-text); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; opacity: 0.18; line-height: 1; margin-bottom: 1.5rem; }
+  .problem-item h3 { font-family: var(--display); font-size: 0.95rem; font-weight: 600; margin-bottom: 0.75rem; }
+  .problem-item p { font-size: 0.855rem; color: var(--gray); line-height: 1.75; }
+
+  .how-section { padding: 7rem 5rem; background: linear-gradient(180deg, rgba(74,158,255,0.03) 0%, transparent 100%); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .how-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 6rem; align-items: start; margin-top: 4rem; }
+  .how-step { display: flex; gap: 2rem; padding: 2rem 0; border-bottom: 1px solid var(--border); }
+  .how-step:first-child { padding-top: 0; }
+  .step-num { font-family: var(--display); font-size: 0.78rem; font-weight: 600; letter-spacing: 0.1em; background: var(--grad-text); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; min-width: 2.2rem; padding-top: 2px; }
+  .step-content h3 { font-family: var(--display); font-size: 0.95rem; font-weight: 600; margin-bottom: 0.5rem; }
+  .step-content p { font-size: 0.855rem; color: var(--gray); line-height: 1.75; }
+  .how-callout { background: var(--surface); border: 1px solid rgba(74,158,255,0.15); padding: 3rem; position: sticky; top: 8rem; }
+  .callout-eyebrow { font-size: 0.68rem; letter-spacing: 0.13em; text-transform: uppercase; color: #7AB8FF; margin-bottom: 1.5rem; }
+  .how-callout blockquote { font-family: var(--display); font-size: 1.3rem; font-weight: 500; line-height: 1.5; margin-bottom: 2rem; }
+  .callout-rule { width: 40px; height: 2px; background: var(--grad); margin-bottom: 1.5rem; }
+  .callout-note { font-size: 0.82rem; color: var(--gray); line-height: 1.7; }
+
+  .contrast-section { padding: 7rem 5rem; }
+  .contrast-table { width: 100%; margin-top: 3rem; border-collapse: collapse; }
+  .contrast-table th { text-align: left; padding: 1rem 1.5rem; font-family: var(--display); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray); border-bottom: 1px solid var(--border); font-weight: 500; }
+  .contrast-table th.col-a { background: rgba(74,158,255,0.06); border-bottom: 2px solid rgba(74,158,255,0.4); }
+  .contrast-table th.col-a span { background: var(--grad-text); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .contrast-table td { padding: 1.1rem 1.5rem; font-size: 0.875rem; color: rgba(255,255,255,0.28); border-bottom: 1px solid var(--border); }
+  .contrast-table td.col-topic { color: rgba(255,255,255,0.45); font-size: 0.82rem; }
+  .contrast-table td.col-a { background: rgba(74,158,255,0.04); color: var(--white); font-weight: 500; }
+  .tick-y { color: #4A9EFF; } .tick-n { color: rgba(255,255,255,0.15); }
+
+  .metrics-section { padding: 7rem 5rem; border-top: 1px solid var(--border); }
+  .metrics-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); margin-top: 4rem; }
+  .metric-item { background: var(--black); padding: 2.5rem 2rem; text-align: center; transition: background 0.3s; }
+  .metric-item:hover { background: rgba(255,255,255,0.02); }
+  .metric-num { font-family: var(--display); font-size: 2.8rem; font-weight: 600; background: var(--grad-text); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; display: block; margin-bottom: 0.5rem; line-height: 1; }
+  .metric-label { font-size: 0.78rem; color: var(--gray); }
+
+  .cta-section { padding: 9rem 5rem; text-align: center; position: relative; overflow: hidden; }
+  .cta-glow { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 800px; height: 500px; background: radial-gradient(ellipse, rgba(74,158,255,0.08) 0%, rgba(139,92,246,0.06) 40%, transparent 70%); pointer-events: none; }
+  .cta-section h2 { font-family: var(--display); font-size: clamp(2rem, 4.5vw, 3.6rem); font-weight: 600; line-height: 1.25; margin-bottom: 1.5rem; position: relative; }
+  .cta-section > p { font-size: 0.95rem; color: rgba(244,244,248,0.45); max-width: 440px; margin: 0 auto 3rem; line-height: 1.8; position: relative; }
+  .cta-inline-form { display: flex; max-width: 460px; margin: 0 auto 1rem; position: relative; }
+  .cta-inline-form input { flex: 1; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-right: none; color: var(--white); padding: 1rem 1.25rem; font-family: var(--sans); font-size: 0.88rem; outline: none; transition: border-color 0.2s; }
+  .cta-inline-form input:focus { border-color: rgba(74,158,255,0.5); }
+  .cta-inline-form input::placeholder { color: rgba(255,255,255,0.22); }
+  .cta-inline-form button { background: var(--grad); color: #fff; border: none; padding: 1rem 1.75rem; font-family: var(--sans); font-size: 0.85rem; font-weight: 500; letter-spacing: 0.04em; cursor: pointer; white-space: nowrap; transition: opacity 0.2s; }
+  .cta-inline-form button:hover { opacity: 0.88; }
+  .cta-note { font-size: 0.72rem; color: rgba(255,255,255,0.18); position: relative; }
+
+  /* MODAL */
+  .modal-overlay { display: none; position: fixed; inset: 0; z-index: 500; background: rgba(4,4,10,0.85); backdrop-filter: blur(10px); align-items: center; justify-content: center; }
+  .modal-overlay.open { display: flex; }
+  .modal { background: #0E0E1A; border: 1px solid rgba(74,158,255,0.2); width: 100%; max-width: 480px; padding: 2.75rem; position: relative; animation: modalIn 0.28s ease forwards; }
+  @keyframes modalIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+  .modal-close { position: absolute; top: 1.25rem; right: 1.25rem; background: none; border: 1px solid rgba(255,255,255,0.12); cursor: pointer; color: rgba(255,255,255,0.4); width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; font-size: 1rem; transition: color 0.2s, border-color 0.2s; }
+  .modal-close:hover { color: var(--white); border-color: rgba(255,255,255,0.35); }
+  .modal-logo { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 2rem; }
+  .modal-logo-text { font-family: var(--display); font-size: 0.9rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; background: var(--grad-text); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .modal h3 { font-family: var(--display); font-size: 1.4rem; font-weight: 600; line-height: 1.3; margin-bottom: 0.6rem; }
+  .modal-sub { font-size: 0.855rem; color: var(--gray); line-height: 1.7; margin-bottom: 2rem; }
+  .modal-field { margin-bottom: 1rem; }
+  .modal-field label { display: block; font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 0.4rem; }
+  .modal-field input, .modal-field select { width: 100%; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); color: var(--white); padding: 0.8rem 1rem; font-family: var(--sans); font-size: 0.88rem; outline: none; transition: border-color 0.2s; -webkit-appearance: none; appearance: none; }
+  .modal-field input:focus, .modal-field select:focus { border-color: rgba(74,158,255,0.5); }
+  .modal-field input::placeholder { color: rgba(255,255,255,0.2); }
+  .modal-field select option { background: #0E0E1A; color: var(--white); }
+  .modal-field.error input, .modal-field.error select { border-color: rgba(255,80,80,0.5); }
+  .modal-field .field-error { font-size: 0.72rem; color: rgba(255,100,100,0.8); margin-top: 0.3rem; display: none; }
+  .modal-field.error .field-error { display: block; }
+  .modal-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .modal-submit { width: 100%; background: var(--grad); color: #fff; border: none; padding: 1rem; font-family: var(--sans); font-size: 0.9rem; font-weight: 500; letter-spacing: 0.04em; cursor: pointer; margin-top: 0.5rem; transition: opacity 0.2s; }
+  .modal-submit:hover { opacity: 0.88; }
+  .modal-privacy { font-size: 0.7rem; color: rgba(255,255,255,0.18); text-align: center; margin-top: 1rem; line-height: 1.6; }
+
+  /* SUCCESS */
+  .modal-success { display: none; text-align: center; padding: 0.5rem 0; }
+  .success-icon { width: 60px; height: 60px; margin: 0 auto 1.5rem; background: rgba(74,158,255,0.08); border: 1px solid rgba(74,158,255,0.25); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+  .modal-success h3 { font-family: var(--display); font-size: 1.4rem; font-weight: 600; margin-bottom: 0.75rem; background: var(--grad-text); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .modal-success p { font-size: 0.875rem; color: var(--gray); line-height: 1.7; max-width: 300px; margin: 0 auto 2rem; }
+  .success-close-btn { background: none; border: 1px solid rgba(255,255,255,0.15); color: rgba(255,255,255,0.5); padding: 0.75rem 2.5rem; font-family: var(--sans); font-size: 0.82rem; cursor: pointer; letter-spacing: 0.04em; transition: all 0.2s; }
+  .success-close-btn:hover { border-color: rgba(255,255,255,0.4); color: var(--white); }
+
+  footer { padding: 2rem 5rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+  .footer-logo { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; }
+  .footer-logo-text { font-family: var(--display); font-size: 0.88rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; background: var(--grad-text); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  footer p { font-size: 0.75rem; color: rgba(255,255,255,0.18); }
+  footer a { color: rgba(255,255,255,0.25); text-decoration: none; font-size: 0.75rem; transition: color 0.2s; }
+  footer a:hover { color: var(--blue); }
+
+  @keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+  .reveal { opacity:0; transform:translateY(18px); transition:opacity 0.65s ease,transform 0.65s ease; }
+  .reveal.visible { opacity:1; transform:none; }
+  .hero h1, .hero-sub, .hero-tag, .hero-actions { padding-left: 2px; }
+  h1, h2, h3 { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+  * { -webkit-font-smoothing: antialiased; }
+
+  @media (max-width: 960px) {
+    nav,.hero,.section,.how-section,.contrast-section,.metrics-section,.cta-section,footer,.trust-bar { padding-left:1.5rem; padding-right:1.5rem; }
+    .hero-content { padding: 7rem 0 4rem; }
+    .problem-grid { grid-template-columns:1fr; background:transparent; }
+    .problem-item { border:1px solid var(--border); margin-bottom:1px; }
+    .how-grid { grid-template-columns:1fr; gap:3rem; }
+    .how-callout { position:static; }
+    .metrics-grid { grid-template-columns:1fr 1fr; }
+    .contrast-table td,.contrast-table th { padding:0.75rem; font-size:0.78rem; }
+    .nav-right .nav-link { display:none; }
+    .modal { margin:1rem; }
+    .modal-row { grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Reusable logo SVG snippet via JS template -->
+<script>
+  document.addEventListener('DOMContentLoaded', () => {});
+</script>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <svg width="34" height="39" viewBox="0 0 100 115" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="lg_nav" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38C8FF"/>
+      <stop offset="55%" stop-color="#6B5CE7"/>
+      <stop offset="100%" stop-color="#8B35D0"/>
+    </linearGradient>
+  </defs>
+  <path fill="url(#lg_nav)" fill-rule="evenodd" d="
+    M 50.4,0
+    L 88.3,63.2
+    L 60.4,63.2
+    L 50.4,83
+    L 39.6,63.2
+    L 11.9,63.2
+    Z
+    M 50.4,30.2
+    L 29.2,62.3
+    L 40.5,62.3
+    L 50.4,47.6
+    L 59.3,62.3
+    L 70.8,62.3
+    Z
+  "/>
+</svg>
+    <span class="nav-logo-text">Applore</span>
+  </a>
+  <div class="nav-right">
+    <a href="#how" class="nav-link">How it works</a>
+    <a href="#contact" class="nav-link">Contact</a>
+    <a href="#" class="nav-cta open-modal" id="nav-cta-btn">Book a strategy call</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow-1"></div>
+  <div class="hero-glow-2"></div>
+  <div class="hero-content">
+  <div class="hero-tag">Advisory-led consulting · Fintech</div>
+  <h1><em style="font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 800; letter-spacing: -0.02em;">Strategy</em> that ships.<br><span class="grad-text">Results you can measure.</span></h1>
+  <p class="hero-sub">Applore embeds with your leadership team from day one — shaping your digital strategy and building the product that proves it. No decks. No handoffs. Just outcomes.</p>
+  <div class="hero-actions">
+    <a href="#" class="btn-primary open-modal">Book a free strategy audit</a>
+    <a href="#how" class="btn-ghost">See how we work →</a>
+  </div>
+  </div>
+</section>
+
+<!-- TRUST BAR -->
+<div class="trust-bar">
+  <span class="trust-label">Trusted by</span>
+  <div class="trust-clients">
+    <span>JK Tyre</span><span>KOHLER</span><span>21Done</span>
+    <span>IndiaClan</span><span>Adorae</span><span>MyDA</span>
+  </div>
+</div>
+
+<!-- PROBLEM -->
+<section class="section reveal">
+  <div class="section-tag">The problem we solve</div>
+  <h2>Fintech leaders don't need another strategy deck.</h2>
+  <p class="section-lead">You've seen what happens when strategy and execution are split. We fix that at the source.</p>
+  <div class="problem-grid">
+    <div class="problem-item">
+      <div class="problem-num">01</div>
+      <h3>Consultants disappear after delivery</h3>
+      <p>You pay for a roadmap. They leave. Your team inherits a document they didn't write, for a strategy they didn't shape.</p>
+    </div>
+    <div class="problem-item">
+      <div class="problem-num">02</div>
+      <h3>Dev shops build the wrong thing well</h3>
+      <p>Execution without strategy produces fast, polished products that don't move the needle — because nobody challenged the brief.</p>
+    </div>
+    <div class="problem-item">
+      <div class="problem-num">03</div>
+      <h3>ROI never gets measured</h3>
+      <p>Most engagements end at launch. Nobody tracks whether the product actually generated revenue, reduced cost, or improved retention.</p>
+    </div>
+  </div>
+</section>
+
+<!-- HOW WE WORK -->
+<section class="how-section reveal" id="how">
+  <div class="section-tag">How Applore works</div>
+  <h2>We don't consult from the outside.<br><span class="grad-text">We build from within.</span></h2>
+  <div class="how-grid">
+    <div class="how-steps">
+      <div class="how-step">
+        <div class="step-num">I</div>
+        <div class="step-content">
+          <h3>Ideation & advisory</h3>
+          <p>We sit in the room where decisions are made. Before a single line of code is written, we challenge assumptions, map opportunities, and define what success looks like.</p>
+        </div>
+      </div>
+      <div class="how-step">
+        <div class="step-num">II</div>
+        <div class="step-content">
+          <h3>Strategy & architecture</h3>
+          <p>We design the product architecture and go-to-market approach together — a living strategy built around your real constraints and growth targets, not a slide deck.</p>
+        </div>
+      </div>
+      <div class="how-step">
+        <div class="step-num">III</div>
+        <div class="step-content">
+          <h3>Build & execution</h3>
+          <p>Our engineering team builds the product. The same people who shaped the strategy ship the code — no translation loss, no misaligned priorities.</p>
+        </div>
+      </div>
+      <div class="how-step">
+        <div class="step-num">IV</div>
+        <div class="step-content">
+          <h3>Measure & optimise</h3>
+          <p>We stay post-launch. We track the metrics that matter and iterate until the ROI case is clear and defensible.</p>
+        </div>
+      </div>
+    </div>
+    <div class="how-callout">
+      <div class="callout-eyebrow">The Applore difference</div>
+      <blockquote>"Think McKinsey for strategy — but they also stay to build the product and prove the numbers."</blockquote>
+      <div class="callout-rule"></div>
+      <p class="callout-note">Most companies split strategy and execution across multiple vendors. The result is misaligned priorities, long cycles, and products that solve the wrong problem well. Applore closes that gap entirely.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTRAST TABLE -->
+<section class="contrast-section reveal">
+  <div class="section-tag">Why Applore</div>
+  <h2>Not a consultancy. Not a dev shop.<br><span class="grad-text">Something better.</span></h2>
+  <table class="contrast-table">
+    <thead>
+      <tr>
+        <th style="width:34%">What you need</th>
+        <th>Pure consulting firm</th>
+        <th>Dev shop</th>
+        <th class="col-a"><span>Applore</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="col-topic">Strategic advisory from day one</td><td><span class="tick-y">✓</span></td><td><span class="tick-n">✗</span></td><td class="col-a"><span class="tick-y">✓</span></td></tr>
+      <tr><td class="col-topic">Involved at ideation stage</td><td><span class="tick-y">✓</span></td><td><span class="tick-n">✗</span></td><td class="col-a"><span class="tick-y">✓</span></td></tr>
+      <tr><td class="col-topic">Actual product execution</td><td><span class="tick-n">✗</span></td><td><span class="tick-y">✓</span></td><td class="col-a"><span class="tick-y">✓</span></td></tr>
+      <tr><td class="col-topic">ROI accountability post-launch</td><td><span class="tick-n">✗</span></td><td><span class="tick-n">✗</span></td><td class="col-a"><span class="tick-y">✓</span></td></tr>
+      <tr><td class="col-topic">No handoffs between strategy & build</td><td><span class="tick-n">✗</span></td><td><span class="tick-n">✗</span></td><td class="col-a"><span class="tick-y">✓</span></td></tr>
+      <tr><td class="col-topic">Outcome-based engagement model</td><td><span class="tick-n">✗</span></td><td><span class="tick-n">✗</span></td><td class="col-a"><span class="tick-y">✓</span></td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- METRICS -->
+<section class="metrics-section reveal">
+  <div class="section-tag">By the numbers</div>
+  <h2>Proven at scale.<br><span class="grad-text">Built for growth.</span></h2>
+  <div class="metrics-grid">
+    <div class="metric-item"><span class="metric-num">125+</span><span class="metric-label">Products shipped</span></div>
+    <div class="metric-item"><span class="metric-num">85k+</span><span class="metric-label">End users served</span></div>
+    <div class="metric-item"><span class="metric-num">148+</span><span class="metric-label">Clients globally</span></div>
+    <div class="metric-item"><span class="metric-num">8+</span><span class="metric-label">Years of execution</span></div>
+  </div>
+</section>
+
+<!-- CTA SECTION -->
+<section class="cta-section reveal" id="contact">
+  <div class="cta-glow"></div>
+  <h2>Ready to stop paying for<br><span class="grad-text">strategies that don't ship?</span></h2>
+  <p>Book a free 30-minute digital strategy audit. We'll identify one high-impact opportunity in your product or go-to-market — no commitment required.</p>
+  <div class="cta-inline-form">
+    <input type="email" placeholder="Your work email" id="cta-email-inline"/>
+    <button type="button" id="cta-inline-btn">Book my audit →</button>
+  </div>
+  <p class="cta-note">No sales pitch. No deck. Just a strategic conversation.</p>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a href="#" class="footer-logo">
+    <svg width="22" height="25" viewBox="0 0 100 115" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="lg_footer" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38C8FF"/>
+      <stop offset="55%" stop-color="#6B5CE7"/>
+      <stop offset="100%" stop-color="#8B35D0"/>
+    </linearGradient>
+  </defs>
+  <path fill="url(#lg_footer)" fill-rule="evenodd" d="
+    M 50.4,0
+    L 88.3,63.2
+    L 60.4,63.2
+    L 50.4,83
+    L 39.6,63.2
+    L 11.9,63.2
+    Z
+    M 50.4,30.2
+    L 29.2,62.3
+    L 40.5,62.3
+    L 50.4,47.6
+    L 59.3,62.3
+    L 70.8,62.3
+    Z
+  "/>
+</svg>
+    <span class="footer-logo-text">Applore</span>
+  </a>
+  <p>© 2026 Applore Technologies. Advisory-led consulting.</p>
+  <a href="https://apploretechnologies.com">apploretechnologies.com</a>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal" id="modal-box" role="dialog" aria-modal="true">
+    <button class="modal-close" id="modal-close" aria-label="Close modal">✕</button>
+
+    <div id="modal-form-state">
+      <div class="modal-logo">
+        <svg width="26" height="30" viewBox="0 0 100 115" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="lg_modal" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38C8FF"/>
+      <stop offset="55%" stop-color="#6B5CE7"/>
+      <stop offset="100%" stop-color="#8B35D0"/>
+    </linearGradient>
+  </defs>
+  <path fill="url(#lg_modal)" fill-rule="evenodd" d="
+    M 50.4,0
+    L 88.3,63.2
+    L 60.4,63.2
+    L 50.4,83
+    L 39.6,63.2
+    L 11.9,63.2
+    Z
+    M 50.4,30.2
+    L 29.2,62.3
+    L 40.5,62.3
+    L 50.4,47.6
+    L 59.3,62.3
+    L 70.8,62.3
+    Z
+  "/>
+</svg>
+        <span class="modal-logo-text">Applore</span>
+      </div>
+      <h3>Book your free <span class="grad-text">strategy audit</span></h3>
+      <p class="modal-sub">30 minutes. No pitch. We'll identify one high-impact opportunity in your product or go-to-market and share it with you — for free.</p>
+      <div class="modal-row">
+        <div class="modal-field" id="field-fname">
+          <label>First name</label>
+          <input type="text" placeholder="Rahul" id="m-fname"/>
+          <span class="field-error">Please enter your first name</span>
+        </div>
+        <div class="modal-field" id="field-lname">
+          <label>Last name</label>
+          <input type="text" placeholder="Sharma" id="m-lname"/>
+          <span class="field-error">Please enter your last name</span>
+        </div>
+      </div>
+      <div class="modal-field" id="field-email">
+        <label>Work email</label>
+        <input type="email" placeholder="rahul@yourcompany.com" id="m-email"/>
+        <span class="field-error">Please enter a valid work email</span>
+      </div>
+      <div class="modal-field" id="field-company">
+        <label>Company</label>
+        <input type="text" placeholder="Your company name" id="m-company"/>
+        <span class="field-error">Please enter your company name</span>
+      </div>
+      <div class="modal-field" id="field-role">
+        <label>Your role</label>
+        <select id="m-role">
+          <option value="" disabled selected>Select your role</option>
+          <option>CEO / Co-founder</option>
+          <option>CTO / CPO</option>
+          <option>VP of Product</option>
+          <option>VP of Engineering</option>
+          <option>Other C-Suite</option>
+        </select>
+        <span class="field-error">Please select your role</span>
+      </div>
+      <button class="modal-submit" id="modal-submit-btn">Reserve my free audit →</button>
+      <p class="modal-privacy">We respect your privacy. No spam, ever. Your details are only used to schedule your call.</p>
+    </div>
+
+    <div class="modal-success" id="modal-success-state">
+      <div class="success-icon">
+        <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+          <path d="M5 13L10.5 18.5L21 8" stroke="#4A9EFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <h3>You're booked in.</h3>
+      <p>We'll reach out within 24 hours to confirm your strategy audit. Check your inbox — something valuable is coming.</p>
+      <button class="success-close-btn" id="modal-success-close">Back to the site</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll('.reveal').forEach(el => {
+    new IntersectionObserver(([e]) => { if (e.isIntersecting) e.target.classList.add('visible'); }, { threshold: 0.08 }).observe(el);
+  });
+
+  const overlay = document.getElementById('modal-overlay');
+  const formState = document.getElementById('modal-form-state');
+  const successState = document.getElementById('modal-success-state');
+
+  function openModal() {
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    formState.style.display = 'block';
+    successState.style.display = 'none';
+  }
+  function closeModal() {
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll('.open-modal').forEach(el => el.addEventListener('click', e => { e.preventDefault(); openModal(); }));
+
+  document.getElementById('cta-inline-btn').addEventListener('click', () => {
+    const email = document.getElementById('cta-email-inline').value.trim();
+    if (email) document.getElementById('m-email').value = email;
+    openModal();
+  });
+
+  document.getElementById('modal-close').addEventListener('click', closeModal);
+  overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+  document.getElementById('modal-submit-btn').addEventListener('click', () => {
+    let valid = true;
+    const checks = [
+      { id: 'field-fname', val: document.getElementById('m-fname').value.trim() },
+      { id: 'field-lname', val: document.getElementById('m-lname').value.trim() },
+      { id: 'field-email', val: document.getElementById('m-email').value.trim(), isEmail: true },
+      { id: 'field-company', val: document.getElementById('m-company').value.trim() },
+      { id: 'field-role', val: document.getElementById('m-role').value },
+    ];
+    checks.forEach(c => {
+      const el = document.getElementById(c.id);
+      const bad = !c.val || (c.isEmail && !c.val.includes('@'));
+      el.classList.toggle('error', bad);
+      if (bad) valid = false;
+    });
+    if (!valid) return;
+    formState.style.display = 'none';
+    successState.style.display = 'block';
+  });
+
+  document.getElementById('modal-success-close').addEventListener('click', closeModal);
+</script>
+</body>
+</html>
